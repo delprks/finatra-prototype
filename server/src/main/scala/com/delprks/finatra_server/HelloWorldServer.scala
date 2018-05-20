@@ -4,12 +4,10 @@ import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
 import com.twitter.finatra.http.routing.HttpRouter
-import com.twitter.finatra.thrift.ThriftServer
-import com.twitter.finatra.thrift.routing.ThriftRouter
 
 object HelloWorldServerMain extends HelloWorldServer
 
-class HelloWorldServer extends HttpServer with ThriftServer {
+class HelloWorldServer extends HttpServer {
 
   override def configureHttp(router: HttpRouter) {
     router
@@ -19,11 +17,11 @@ class HelloWorldServer extends HttpServer with ThriftServer {
       .add[HelloWorldHttpController]
   }
 
-  override def configureThrift(router: ThriftRouter) = {
-    router
-      .filter[LoggingMDCFilter[Request, Response]]
-      .filter[TraceIdMDCFilter[Request, Response]]
-      .filter[CommonFilters]
-      .add[HelloWorldThriftController]
-  }
+//  override def configureThrift(router: ThriftRouter) = {
+//    router
+//      .filter[LoggingMDCFilter[Request, Response]]
+//      .filter[TraceIdMDCFilter[Request, Response]]
+//      .filter[CommonFilters]
+//      .add[HelloWorldThriftController]
+//  }
 }
